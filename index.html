@@ -3,185 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>卡路里计算器</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.4;
-            color: #333;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 0px;
-            background-color: #f9f9f9;
-        }
-        .container {
-            background-color: #ffffff;
-            padding: 10px;
-            border-radius: 0px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-            margin-bottom: 0px;
-        }
-        h1, h2, h3 {
-            color: #2e7d32;
-            margin-bottom: 6px;
-        }
-        input, select, button {
-            margin: 10px 0;
-            padding: 6px;
-            width: 100%;
-            border-radius: 0px;
-            border: 1px solid #ccc;
-            font-size: 16px;
-        }
-        button {
-            background-color: #4caf50;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #388e3c;
-        }
-        .info {
-            background-color: #dcedc8;
-            padding: 0px;
-            border-left: 5px solid #4caf50;
-            margin-bottom: 0px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 5px;
-            font-size: 14px;
-        }
-        th, td {
-            border: 1px solid #ccc;
-            padding: 0px;
-            text-align: center;
-        }
-        th {
-            background-color: #4caf50;
-            color: white;
-        }
-        tr:nth-child(even) {
-            background-color: #f1f8e9;
-        }
-        /* Info 区域整体样式 */
-       .info-container {
-       border: 1px solid #c8e6c9;
-       border-radius: 3px;
-       margin-bottom: 3px;
-       background-color: #f1f8e9;
-       overflow: hidden;
-}
-/* Info 标题和折叠按钮样式 */
-      .info-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 5px 5px;
-      background-color: #4caf50;
-      color: #fff;
-      cursor: pointer;
-}
-/* 折叠按钮样式 */
-      .toggle-button {
-      background: none;
-      border: none;
-      color: #fff;
-      font-size: 10px;
-      transform: rotate(0deg);
-      transition: transform 0.3s ease;
-      cursor: pointer;
-}
-
-/* 折叠内容样式 */
-      .info-content {
-      padding: 8px;
-      line-height: 1.6;
-      color: #333;
-}
-
-/* 折叠内容隐藏时的样式 */
-     .info-container.collapsed .info-content {
-      display: none;
-}
-
-    </style>
+    <title>卡路里计算器 - 每日热量管理工具</title>
+    <link rel="stylesheet" href="styles.css">
+    <meta name="description" content="使用我们的卡路里计算器来计算每日热量需求，追踪食物摄入，并管理您的饮食计划。包括常见食物热量表和个性化建议。">
+    <meta name="keywords" content="卡路里计算器, 热量管理, 减肥, 饮食计划, 食物热量表">
 </head>
 <body>
-    <div class="container">
+    <header>
         <h1>卡路里计算器</h1>
-        
-        <h2>每日所需摄入量</h2>
-        <div class="info-container">
-        <div class="info-header">
-        <button class="toggle-button" onclick="toggleInfo()">
-            &#9650;
-             </button>
-    </div>
-    <div class="info-content" id="info-content">
-            1.这里计算维持当前体重所需卡路里。<br>
-            2.减肥=每日摄入量<维持体重所需量，禁止过少摄入，否则影响身心健康，最好在80-85%之间。<br>
-            3.每减少0.5公斤（1斤），可减少摄入25-50大卡。<br>
-        </div>
-        <input type="number" id="weight" placeholder="输入体重(kg)">
-        <input type="number" id="height" placeholder="输入身高(cm)">
-        <input type="number" id="age" placeholder="输入年龄">
-        <select id="gender">
-            <option value="male">男性</option>
-            <option value="female">女性</option>
-        </select>
-        <select id="activity-level">
-            <option value="1.2">久坐不动</option>
-            <option value="1.375">轻度活动</option>
-            <option value="1.55">中度活动</option>
-            <option value="1.725">高度活动</option>
-            <option value="1.9">非常活跃</option>
-        </select>
-         <div class="tooltip">
-            <span class="tooltiptext">
-                <strong>久坐不动：</strong>长时间坐着工作，每天步数少于5000步。例如：办公室职员、长途卡车司机。<br>
-                <strong>轻度活动：</strong>每天步数5000-7499步。如：教师、导游。<br>
-                <strong>中度活动：</strong>经常每天步数7500-9999步。如：大学生。<br>
-                <strong>高度活动：</strong>大部分时间站立或走动，每天步数10000-12499步。例如：服务生、健身者。<br>
-                <strong>非常活跃：</strong>体力劳动或高强度训练，每天步数超过12500步。例如：建筑工人、农民、专业运动员。
-            </span>
-        <button onclick="calculateDailyCalories()">计算每日摄入量</button>
-        <p>维持体重所需量: <span id="maintenance-calories"></span> 大卡</p>
-        <p>减肥推荐每天摄入: <span id="weight-loss-calories-range"></span> 大卡</p>
-        
-        <input type="number" id="target-weight" placeholder="输入目标体重(kg)">
-        <button onclick="calculateWeightLossGoal()">计算减肥时间</button>
-        <p>每天摄入推荐量基础上，还需: <span id="time-to-goal"></span></p>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="showPage('daily-calories')">每日热量计算</a></li>
+                <li><a href="#" onclick="showPage('daily-intake')">每日所需摄入量</a></li>
+                <li><a href="#" onclick="showPage('food-management')">添加或修改食物</a></li>
+            </ul>
+        </nav>
+    </header>
 
-        <h2>每日热量计算（可多次添加）</h2>
-        <select id="food-select"></select>
-        <input type="number" id="food-amount" placeholder="输入食物重量(克)">
-        <button onclick="addFood()">添加食物</button>
-        
-        <p>已添加的食物:</p>
-        <ul id="food-list"></ul>
-        <p>总卡路里: <span id="total-calories">0</span> 大卡</p>
+    <main>
+        <section id="daily-calories" class="page active">
+            <h2>每日热量计算（可多次添加）</h2>
+            <select id="food-select"></select>
+            <input type="number" id="food-amount" placeholder="输入食物重量(克)">
+            <button onclick="addFood()">添加食物</button>
+            
+            <p>已添加的食物:</p>
+            <ul id="food-list"></ul>
+            <p>总卡路里: <span id="total-calories">0</span> 大卡</p>
+        </section>
 
-        <h3>添加或修改食物</h3>
-        <input type="text" id="new-food-name" placeholder="输入食物名称">
-        <input type="number" id="new-food-calories" placeholder="输入每100克的卡路里">
-        <button onclick="addOrUpdateFood()">添加或修改食物</button>
+        <section id="daily-intake" class="page">
+            <h2>每日所需摄入量</h2>
+            <div class="info-container">
+                <div class="info-header">
+                    <h3>计算说明</h3>
+                    <button class="toggle-button" onclick="toggleInfo()">&#9650;</button>
+                </div>
+                <div class="info-content" id="info-content">
+                    <p>1.这里计算维持当前体重每天所需卡路里。</p>
+                    <p>2.减肥=每日摄入量<维持体重所需量，禁止过少摄入，最好在80-85%之间。</p>
+                    <p>3.体重每减少0.5公斤（1斤），可天减少25-50大卡。</p>
+                </div>
+            </div>
+            <input type="number" id="weight" placeholder="输入体重(kg)">
+            <input type="number" id="height" placeholder="输入身高(cm)">
+            <input type="number" id="age" placeholder="输入年龄">
+            <select id="gender">
+                <option value="male">男性</option>
+                <option value="female">女性</option>
+            </select>
+            <select id="activity-level">
+                <option value="1.2">久坐不动</option>
+                <option value="1.375">轻度活动</option>
+                <option value="1.55">中度活动</option>
+                <option value="1.725">高度活动</option>
+                <option value="1.9">非常活跃</option>
+            </select>
+            <button onclick="calculateDailyCalories()">计算每日摄入量</button>
+            <p>维持体重所需量: <span id="maintenance-calories"></span> 大卡</p>
+            <p>减肥建议量: <span id="weight-loss-calories-range"></span> 大卡</p>
 
-        <h2>常见食物热量表（每100克）</h2>
-        <table id="food-table">
-            <tr>
-                <th>食物</th>
-                <th>卡路里（大卡）</th>
-                <th>操作</th>
-            </tr>
-        </table>
-    </div>
+            <input type="number" id="target-weight" placeholder="输入目标体重(kg)">
+            <button onclick="calculateWeightLossGoal()">计算时间</button>
+            <p>以摄入减肥建议量为基准，达到目标体重所需时间: <span id="time-to-goal"></span></p>
+        </section>
+
+        <section id="food-management" class="page">
+            <h2>添加或修改食物</h2>
+            <input type="text" id="new-food-name" placeholder="输入食物名称">
+            <input type="number" id="new-food-calories" placeholder="输入每100克的卡路里">
+            <button onclick="addOrUpdateFood()">添加或修改食物</button>
+
+            <h3>常见食物热量表（每100克）</h3>
+            <table id="food-table">
+                <tr>
+                    <th>食物</th>
+                    <th>卡路里（大卡）</th>
+                    <th>操作</th>
+                </tr>
+            </table>
+        </section>
+    </main>
 
     <script>
-        let totalCalories = 0;
+let totalCalories = 0;
         const foodList = document.getElementById('food-list');
         const totalCaloriesSpan = document.getElementById('total-calories');
 
@@ -363,6 +268,12 @@
        const infoContainer = document.querySelector('.info-container');
        infoContainer.classList.toggle('collapsed');
 }
+
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+        }
 
         // 初始化食物选择和食物热量表
         initializeFoodSelect();
